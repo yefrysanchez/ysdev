@@ -1,8 +1,13 @@
 import React from 'react'
 
-const CaroImg = () => {
+const CaroImg = ({img}) => {
   return (
-    <div>CaroImg</div>
+    <div className='relative'>
+        <img className='w-full h-[700px] object-cover' src={img} alt="banner img" />
+        <div>
+            <h1>Text</h1>
+        </div>
+    </div>
   )
 }
 
