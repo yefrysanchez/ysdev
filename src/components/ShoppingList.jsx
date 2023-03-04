@@ -1,4 +1,5 @@
 import React from "react";
+import Item from "./Item";
 
 const ShoppingList = () => {
   return (
@@ -76,7 +77,7 @@ const ShoppingList = () => {
           aria-labelledby="tabs-home-tab01"
           data-te-tab-active
         >
-          Tab 1 content
+          <Item />
         </div>
         <div
           className="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
