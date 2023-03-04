@@ -8,7 +8,7 @@ import Subscribe from "../components/Subscribe";
 
 const Home = () => {
   return (
-    <div>
+    <div className="mt-[60px]">
       <MainCarousel />
       <Subscribe />
       <ShoppingList />
