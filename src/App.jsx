@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
 
+
 function App() {
   const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -21,6 +22,7 @@ function App() {
 
     return null;
   };
+
 
   return (
     <div className="font-Montserrat">

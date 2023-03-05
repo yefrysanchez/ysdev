@@ -78,14 +78,6 @@ const ShoppingList = () => {
           data-te-tab-active
         >
           <Item />
-          <Item />
-          <Item />
-          <Item />
-          <Item />
-          <Item />
-          <Item />
-          <Item />
-          <Item />
         </div>
         <div
           className="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:flex justify-around flex-wrap"
