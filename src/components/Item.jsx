@@ -2,8 +2,8 @@ import React from "react";
 
 const Item = () => {
   return (
-    <div className="mt-8 mx-2">
-      <div className="group relative max-w-[300px] w- h-[400px] rounded-lg overflow-hidden">
+    <div className="m-4">
+      <div className="group relative max-w-[300px] h-[400px] rounded-lg overflow-hidden">
         <img
           className="w-full h-full group-hover:scale-105 duration-300 object-cover cursor-pointer"
           src="https://images.prismic.io/frameworkmarketplace/46cbf974-cdff-4cd8-b761-8b4a3343f6c4_FW-chromebook-homepage-carousel.png?auto=compress,format"
@@ -30,7 +30,7 @@ const Item = () => {
           </button>
         </div>
       </div>
-      <div className="mt-1 mx-2">
+      <div className="mt-1">
         <p className="text-sm">Category</p>
         <h3 className="font-bold">Item Name</h3>
         <p>$199.99</p>

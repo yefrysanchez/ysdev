@@ -2,7 +2,7 @@ import React from "react";
 
 const Subscribe = () => {
   return (
-    <div className="w-4/5 mx-auto text-center my-16">
+    <div className="w-4/5 mx-auto text-center">
       <div className="text-3xl">
         <i className="fa-solid fa-envelope-circle-check"></i>
       </div>

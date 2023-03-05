@@ -3,7 +3,7 @@ import Item from "./Item";
 
 const ShoppingList = () => {
   return (
-    <div className="lg:w-4/5 mt-[80px] mx-auto">
+    <div className="lg:w-4/5 mt-[80px] mx-auto ">
       <div className="mb-4">
         <h3 className="text-center text-5xl">
           Our Feature <b>Products</b>
@@ -69,18 +69,26 @@ const ShoppingList = () => {
           </a>
         </li>
       </ul>
-      <div className="mb-6">
+      <div className="mb-6 w-full h-full ">
         <div
-          className="hidden opacity-0 opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
+          className="hidden opacity-0 opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:grid md:grid-cols-2 xl:grid-cols-3 place-items-center"
           id="tabs-home01"
           role="tabpanel"
           aria-labelledby="tabs-home-tab01"
           data-te-tab-active
         >
           <Item />
+          <Item />
+          <Item />
+          <Item />
+          <Item />
+          <Item />
+          <Item />
+          <Item />
+          <Item />
         </div>
         <div
-          className="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
+          className="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:flex justify-around flex-wrap"
           id="tabs-profile01"
           role="tabpanel"
           aria-labelledby="tabs-profile-tab01"
@@ -88,7 +96,7 @@ const ShoppingList = () => {
           Tab 2 content
         </div>
         <div
-          className="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
+          className="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:flex justify-around flex-wrap"
           id="tabs-messages01"
           role="tabpanel"
           aria-labelledby="tabs-profile-tab01"
@@ -96,7 +104,7 @@ const ShoppingList = () => {
           Tab 3 content
         </div>
         <div
-          className="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
+          className="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:flex justify-around flex-wrap"
           id="tabs-contact01"
           role="tabpanel"
           aria-labelledby="tabs-contact-tab01"

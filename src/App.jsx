@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import CartMenu from "./components/CartMenu";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { Checkout } from "./pages/Checkout";
 import Confirmation from "./pages/Confirmation";
@@ -24,6 +25,7 @@ function App() {
         <Route path="/checkout/success" element={<Confirmation />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
