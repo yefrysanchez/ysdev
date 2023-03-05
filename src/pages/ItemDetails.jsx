@@ -3,7 +3,7 @@ import Item from '../components/Item'
 
 const ItemDetails = () => {
   return (
-    <div className="mt-[80px] w-4/5 mx-auto ">
+    <div className="pt-[80px] w-4/5 mx-auto ">
       <div className="flex flex-col lg:flex-row gap-x-10">
         {/* IMAGE */}
         <div className=" flex-[1_1_40%] mb-10">

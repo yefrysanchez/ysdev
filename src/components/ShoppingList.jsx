@@ -71,7 +71,7 @@ const ShoppingList = () => {
       </ul>
       <div className="mb-6 w-full h-full ">
         <div
-          className="hidden opacity-0 opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:grid md:grid-cols-2 xl:grid-cols-3 place-items-center"
+          className="hidden opacity-0 opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 place-items-center"
           id="tabs-home01"
           role="tabpanel"
           aria-labelledby="tabs-home-tab01"

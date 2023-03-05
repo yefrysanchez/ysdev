@@ -1,4 +1,5 @@
-import { Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import CartMenu from "./components/CartMenu";
 import Footer from "./components/Footer";
@@ -12,10 +13,20 @@ import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
 
 function App() {
+  const ScrollToTop = () => {
+    const { pathname } = useLocation();
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+  };
+
   return (
     <div className="font-Montserrat">
       <Navbar />
       <CartMenu />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

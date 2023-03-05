@@ -6,7 +6,7 @@ import Subscribe from "../components/Subscribe";
 
 const Home = () => {
   return (
-    <div className="mt-[60px] min-h-screen">
+    <div className="pt-[60px]">
       <MainCarousel />
       <ShoppingList />
       <Subscribe />
