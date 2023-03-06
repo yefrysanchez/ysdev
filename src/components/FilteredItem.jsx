@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addToCart, setItems } from "../state/cartSlice";
 
-const Item = ({ category }) => {
+const FilteredItem = ({ category }) => {
   const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
-  let count = 1;
+  const navigate = useNavigate()
 
   const url = `https://${
     import.meta.env.VITE_REACT_APP_API_ID
@@ -31,6 +32,7 @@ const Item = ({ category }) => {
         <div key={item._id} className="m-4">
           <div className="group relative max-w-[300px] h-[400px] rounded-lg overflow-hidden">
             <img
+             onClick={() => navigate(`/item/${item.slug.current}`)}
               className="w-full h-full group-hover:scale-105 duration-300 object-contain cursor-pointer"
               src={item.image}
               alt={item.name}
@@ -58,4 +60,4 @@ const Item = ({ category }) => {
   return <>{itemCard}</>;
 };
 
-export default Item;
+export default FilteredItem;

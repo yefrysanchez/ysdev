@@ -1,7 +1,16 @@
 import React from "react";
-import Item from '../components/Item'
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import FilteredItem from "../components/FilteredItem";
+import { addToCart, decrement, increment } from "../state/cartSlice";
 
 const ItemDetails = () => {
+  const { itemId } = useParams();
+  const dispatch = useDispatch()
+  const items = useSelector((state) => state.cart.items);
+  const product = items.find((item) => item.slug.current === itemId);
+  const count = 1
+
   return (
     <div className="pt-[80px] w-4/5 mx-auto ">
       <div className="flex flex-col lg:flex-row gap-x-10">
@@ -9,8 +18,8 @@ const ItemDetails = () => {
         <div className=" flex-[1_1_40%] mb-10">
           <img
             className="w-full h-full object-contain"
-            src="https://dpbnri2zg3lc2.cloudfront.net/en/wp-content/uploads/2022/11/so-many-rubber-duck-debugging-possibilities.jpeg"
-            alt=""
+            src={product.image}
+            alt={product.name}
           />
         </div>
 
@@ -22,30 +31,26 @@ const ItemDetails = () => {
           </div>
 
           <div className="mt-10 mb-6">
-            <h3 className="font-bold text-2xl">Item Name</h3>
+            <h3 className="font-bold text-2xl">{product.name}</h3>
             <p>$199.99</p>
-            <p className="mt-5">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
-              corporis expedita molestias quia quibusdam. Error omnis ipsum
-              consectetur magni. Nulla ipsum eaque iste saepe est.
-            </p>
+            <p className="mt-5">{product.desc}</p>
           </div>
 
           {/* COUNT AND BUTTON */}
 
-          <div className="flex items-center justify-end min-h-[50px]">
-            <div className="flex items-center mr-5 p-1">
-              <div className="cursor-pointer mr-1 bg-black text-white py-1 px-2 rounded-lg">
+          <div className="flex items-center min-h-[50px]">
+            {/* <div className="flex items-center mr-5 p-1">
+              <div onClick={() => dispatch(decrement({ _id: product._id }))} className="cursor-pointer mr-1 bg-black text-white py-1 px-2 rounded-lg">
                 <i className="fa-solid fa-minus"></i>
               </div>
               <span className=" bg-black mr-1 text-white py-1 px-2 rounded-lg">
-                1
+                {product.count}
               </span>
-              <div className="cursor-pointer bg-black text-white py-1 px-2 rounded-lg">
+              <div onClick={() => dispatch(increment({ _id: product._id }))} className="cursor-pointer bg-black text-white py-1 px-2 rounded-lg">
                 <i className="fa-solid fa-plus"></i>
               </div>
-            </div>
-            <button className=" bg-black md:w-[250px] text-white w-full py-2 rounded-lg font-bold lg:hover:opacity-80 duration-300">
+            </div> */}
+            <button onClick={() => dispatch(addToCart({ item: { ...product, count } }))} className=" bg-black md:w-[250px] text-white w-full py-2 rounded-lg font-bold lg:hover:opacity-80 duration-300">
               ADD TO CART
             </button>
           </div>
@@ -56,7 +61,7 @@ const ItemDetails = () => {
               </div>
               <p className="ml-1 ">ADD TO WISHLIST</p>
             </div>
-            <p>Category</p>
+            <p>{product.category}</p>
           </div>
         </div>
       </div>
@@ -108,7 +113,7 @@ const ItemDetails = () => {
             aria-labelledby="pills-home-tab"
             data-te-tab-active
           >
-            DESCRIPTION
+            {product.longDesc}
           </div>
           <div
             className="hidden opacity-0 opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
@@ -125,11 +130,8 @@ const ItemDetails = () => {
 
       <div className="mt-12 pt-4 w-full border-t-[1px]">
         <h3 className="font-bold text-2xl">Related Products</h3>
-        <div className="mt-5 flex flex-wrap justify-center gap-x-[1.33%] md:justify-between">
-          <Item />
-          <Item />
-          <Item />
-          <Item />
+        <div className="mt-5 flex flex-wrap justify-center gap-x-[1.33%] lg:justify-start">
+          <FilteredItem category={product.category} />
         </div>
       </div>
     </div>
