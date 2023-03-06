@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { increment, decrement, addToCart } from "../state/cartSlice";
 
 const Item = () => {
+  const count = useSelector((state) => state.cart.count);
+  const cart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
+
   const [items, setItems] = useState();
   const url = `https://${
     import.meta.env.VITE_REACT_APP_API_ID
@@ -33,18 +39,21 @@ const Item = () => {
               {/* Amount */}
 
               <div className="hidden duration-300 group-hover:flex items-center w-full justify-around text-xl rounded-lg">
-                <div className="cursor-pointer bg-black text-white py-1 px-2 rounded-lg">
+                <div onClick={() => dispatch(decrement())} className="cursor-pointer bg-black text-white py-1 px-2 rounded-lg">
                   <i className="fa-solid fa-minus"></i>
                 </div>
                 <span className=" bg-black text-white py-1 px-2 rounded-lg">
-                  1
+                  {count}
                 </span>
-                <div className="cursor-pointer bg-black text-white py-1 px-2 rounded-lg">
+                <div
+                  onClick={() => dispatch(increment())}
+                  className="cursor-pointer bg-black text-white py-1 px-2 rounded-lg"
+                >
                   <i className="fa-solid fa-plus"></i>
                 </div>
               </div>
             </div>
-            <button className="hidden group-hover:block bg-black text-white w-full py-2 rounded-lg mt-4 font-bold lg:hover:opacity-80 duration-300">
+            <button onClick={() => dispatch(addToCart({ item: { ...item, count } }))} className="hidden group-hover:block bg-black text-white w-full py-2 rounded-lg mt-4 font-bold lg:hover:opacity-80 duration-300">
               ADD TO CART
             </button>
           </div>
