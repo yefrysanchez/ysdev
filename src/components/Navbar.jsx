@@ -1,13 +1,10 @@
 import React from "react";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setIsCartOpen } from "../state/cartSlice";
 
-
-
 const Navbar = () => {
- 
-  const cart = useSelector((state) => state.cart.cart)
+  const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
 
   return (
@@ -29,11 +26,16 @@ const Navbar = () => {
               <i className="group-hover:text-white fa-solid fa-user"></i>
             </li>
           </Link>
-          <li onClick={()=> dispatch(setIsCartOpen())} className="group hover:bg-black duration-300 relative bg-slate-100 rounded-full py-1 px-2 cursor-pointer">
+          <li
+            onClick={() => dispatch(setIsCartOpen())}
+            className="group hover:bg-black duration-300 relative bg-slate-100 rounded-full py-1 px-2 cursor-pointer"
+          >
             <i className="group-hover:text-white fa-solid fa-cart-shopping"></i>
-            <div className="absolute h-4 w-4 rounded-full right-[-6px] top-[-6px] bg-red-500 flex justify-center items-center font-bold text-white text-xs">
-              <span>{cart.length}</span>
-            </div>
+            {cart.length > 0 && (
+              <div className="absolute h-4 w-4 rounded-full right-[-6px] top-[-6px] bg-red-500 flex justify-center items-center font-bold text-white text-xs">
+                <span>{cart.length}</span>
+              </div>
+            )}
           </li>
         </ul>
       </nav>

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { increment, decrement, addToCart } from "../state/cartSlice";
+import { addToCart, setItems } from "../state/cartSlice";
 
 const Item = () => {
-  const count = useSelector((state) => state.cart.count);
-  const cart = useSelector((state) => state.cart.cart);
+  let count = 1;
+  const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
-  const [items, setItems] = useState();
   const url = `https://${
     import.meta.env.VITE_REACT_APP_API_ID
   }.api.sanity.io/v2021-10-21/data/query/${
@@ -17,7 +16,7 @@ const Item = () => {
   const fetchItems = async () => {
     const res = await fetch(url);
     const data = await res.json();
-    setItems(data.result);
+    dispatch(setItems(data.result));
   };
 
   useEffect(() => {
@@ -35,25 +34,10 @@ const Item = () => {
             alt={item.name}
           />
           <div className="absolute bottom-[10%] left-0 w-full px-[5%]">
-            <div className="flex justify-between ">
-              {/* Amount */}
-
-              <div className="hidden duration-300 group-hover:flex items-center w-full justify-around text-xl rounded-lg">
-                <div onClick={() => dispatch(decrement())} className="cursor-pointer bg-black text-white py-1 px-2 rounded-lg">
-                  <i className="fa-solid fa-minus"></i>
-                </div>
-                <span className=" bg-black text-white py-1 px-2 rounded-lg">
-                  {count}
-                </span>
-                <div
-                  onClick={() => dispatch(increment())}
-                  className="cursor-pointer bg-black text-white py-1 px-2 rounded-lg"
-                >
-                  <i className="fa-solid fa-plus"></i>
-                </div>
-              </div>
-            </div>
-            <button onClick={() => dispatch(addToCart({ item: { ...item, count } }))} className="hidden group-hover:block bg-black text-white w-full py-2 rounded-lg mt-4 font-bold lg:hover:opacity-80 duration-300">
+            <button
+              onClick={() => dispatch(addToCart({ item: { ...item, count } }))}
+              className="hidden group-hover:block bg-black text-white w-full py-2 rounded-lg mt-4 font-bold lg:hover:opacity-80 duration-300"
+            >
               ADD TO CART
             </button>
           </div>

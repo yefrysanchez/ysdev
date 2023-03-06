@@ -1,19 +1,30 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, decrement, increment, removeFromCart, setIsCartOpen } from "../state/cartSlice";
+import { useNavigate } from "react-router-dom";
+import {
+  decrement,
+  increment,
+  removeFromCart,
+  setIsCartOpen,
+} from "../state/cartSlice";
 
 const CartMenu = () => {
-  // const [isCartOpen, setIsCartOpen] = useState(false);
   const isCartOpen = useSelector((state) => state.cart.isCartOpen);
   const cart = useSelector((state) => state.cart.cart);
-  const count = useSelector((state) => state.cart.count);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const totalPrice = cart.reduce((total, item) => {
     return total + item.count * item.price;
-  }, 0)
+  }, 0);
 
-  
+  const onCheckout = () => {
+    if (cart.length !== 0) {
+      navigate("/checkout");
+      dispatch(setIsCartOpen());
+    }
+  };
+
   return (
     <div
       className={`${
@@ -50,17 +61,28 @@ const CartMenu = () => {
                         <h3 className="font-bold">{item.name}</h3>
                         <p className="text-xs w-40 ">{item.desc}</p>
                       </div>
-                      <div onClick={() => dispatch(removeFromCart({_id: item._id}))} className="text-xl cursor-pointer">
+                      <div
+                        onClick={() =>
+                          dispatch(removeFromCart({ _id: item._id }))
+                        }
+                        className="text-xl cursor-pointer"
+                      >
                         <i className="fa-solid fa-xmark"></i>
                       </div>
                     </div>
                     <div className="mx-4 flex justify-between pr-4">
                       <div className="flex content-center  ">
-                        <div onClick={() => dispatch(decrement())} className="border cursor-pointer px-1">
+                        <div
+                          onClick={() => dispatch(decrement({ _id: item._id }))}
+                          className="border cursor-pointer px-1"
+                        >
                           <i className="fa-solid fa-minus"></i>
                         </div>
-                        <span className="mx-2">{count}</span>
-                        <div onClick={() => dispatch(increment())} className="border cursor-pointer px-1">
+                        <span className="mx-2">{item.count}</span>
+                        <div
+                          onClick={() => dispatch(increment({ _id: item._id }))}
+                          className="border cursor-pointer px-1"
+                        >
                           <i className="fa-solid fa-plus"></i>
                         </div>
                       </div>
@@ -79,9 +101,14 @@ const CartMenu = () => {
           <div className="mt-4">
             <div className="flex justify-end gap-8">
               <h3 className="font-bold">SUBTOTAL:</h3>
-              <h3 className="font-bold">${totalPrice.toFixed(2)}</h3>
+              <h3 className="font-bold">
+                ${totalPrice.toFixed(2).toLocaleString()}
+              </h3>
             </div>
-            <button className="bg-black text-white w-full py-4 rounded-lg mt-4 font-bold lg:hover:opacity-80 duration-300">
+            <button
+              onClick={onCheckout}
+              className="bg-black text-white w-full py-4 rounded-lg mt-4 font-bold lg:hover:opacity-80 duration-300"
+            >
               CHECKOUT
             </button>
           </div>

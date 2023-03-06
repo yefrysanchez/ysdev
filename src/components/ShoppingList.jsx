@@ -1,4 +1,5 @@
 import React from "react";
+import FilteredItem from "./FilteredItem";
 import Item from "./Item";
 
 const ShoppingList = () => {
@@ -85,7 +86,7 @@ const ShoppingList = () => {
           role="tabpanel"
           aria-labelledby="tabs-profile-tab01"
         >
-          Tab 2 content
+          <FilteredItem category="Best Sellers" />
         </div>
         <div
           className="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:flex justify-around flex-wrap"
@@ -93,7 +94,7 @@ const ShoppingList = () => {
           role="tabpanel"
           aria-labelledby="tabs-profile-tab01"
         >
-          Tab 3 content
+          <FilteredItem category="New Arrivals" />
         </div>
         <div
           className="hidden opacity-0 transition-opacity duration-150 ease-linear data-[te-tab-active]:flex justify-around flex-wrap"
@@ -101,7 +102,7 @@ const ShoppingList = () => {
           role="tabpanel"
           aria-labelledby="tabs-contact-tab01"
         >
-          Tab 4 content
+          <FilteredItem category="Top Rated" />
         </div>
       </div>
     </div>
