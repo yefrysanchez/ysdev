@@ -1,15 +1,29 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import FilteredItem from "../components/FilteredItem";
-import { addToCart, decrement, increment } from "../state/cartSlice";
+import { addToCart } from "../state/cartSlice";
 
 const ItemDetails = () => {
   const { itemId } = useParams();
-  const dispatch = useDispatch()
-  const items = useSelector((state) => state.cart.items);
-  const product = items.find((item) => item.slug.current === itemId);
-  const count = 1
+  const dispatch = useDispatch();
+  const [items, setItems] = useState([]);
+
+  const url = `https://${
+    import.meta.env.VITE_REACT_APP_API_ID
+  }.api.sanity.io/v2021-10-21/data/query/${
+    import.meta.env.VITE_REACT_APP_DATASET
+  }?query=${import.meta.env.VITE_REACT_APP_QUERY}`;
+
+  const fetchItems = async () => {
+    const res = await fetch(url);
+    const data = await res.json();
+    setItems(data.result.find((item) => item.slug.current === itemId));
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, [itemId]);
 
   return (
     <div className="pt-[80px] w-4/5 mx-auto ">
@@ -18,8 +32,8 @@ const ItemDetails = () => {
         <div className=" flex-[1_1_40%] mb-10">
           <img
             className="w-full h-full object-contain"
-            src={product.image}
-            alt={product.name}
+            src={items.image}
+            alt={items.name}
           />
         </div>
 
@@ -31,26 +45,29 @@ const ItemDetails = () => {
           </div>
 
           <div className="mt-10 mb-6">
-            <h3 className="font-bold text-2xl">{product.name}</h3>
+            <h3 className="font-bold text-2xl">{items.name}</h3>
             <p>$199.99</p>
-            <p className="mt-5">{product.desc}</p>
+            <p className="mt-5">{items.desc}</p>
           </div>
 
           {/* COUNT AND BUTTON */}
 
           <div className="flex items-center min-h-[50px]">
             {/* <div className="flex items-center mr-5 p-1">
-              <div onClick={() => dispatch(decrement({ _id: product._id }))} className="cursor-pointer mr-1 bg-black text-white py-1 px-2 rounded-lg">
+              <div onClick={() => dispatch(decrement({ _id: items._id }))} className="cursor-pointer mr-1 bg-black text-white py-1 px-2 rounded-lg">
                 <i className="fa-solid fa-minus"></i>
               </div>
               <span className=" bg-black mr-1 text-white py-1 px-2 rounded-lg">
-                {product.count}
+                {items.count}
               </span>
-              <div onClick={() => dispatch(increment({ _id: product._id }))} className="cursor-pointer bg-black text-white py-1 px-2 rounded-lg">
+              <div onClick={() => dispatch(increment({ _id: items._id }))} className="cursor-pointer bg-black text-white py-1 px-2 rounded-lg">
                 <i className="fa-solid fa-plus"></i>
               </div>
             </div> */}
-            <button onClick={() => dispatch(addToCart({ item: { ...product, count } }))} className=" bg-black md:w-[250px] text-white w-full py-2 rounded-lg font-bold lg:hover:opacity-80 duration-300">
+            <button
+              onClick={() => dispatch(addToCart({ item: { ...items, count } }))}
+              className=" bg-black md:w-[250px] text-white w-full py-2 rounded-lg font-bold lg:hover:opacity-80 duration-300"
+            >
               ADD TO CART
             </button>
           </div>
@@ -61,7 +78,7 @@ const ItemDetails = () => {
               </div>
               <p className="ml-1 ">ADD TO WISHLIST</p>
             </div>
-            <p>{product.category}</p>
+            <p>{items.category}</p>
           </div>
         </div>
       </div>
@@ -113,7 +130,7 @@ const ItemDetails = () => {
             aria-labelledby="pills-home-tab"
             data-te-tab-active
           >
-            {product.longDesc}
+            {items.longDesc}
           </div>
           <div
             className="hidden opacity-0 opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
@@ -131,7 +148,7 @@ const ItemDetails = () => {
       <div className="mt-12 pt-4 w-full border-t-[1px]">
         <h3 className="font-bold text-2xl">Related Products</h3>
         <div className="mt-5 flex flex-wrap justify-center gap-x-[1.33%] lg:justify-start">
-          <FilteredItem category={product.category} />
+          <FilteredItem category={items.category} />
         </div>
       </div>
     </div>
