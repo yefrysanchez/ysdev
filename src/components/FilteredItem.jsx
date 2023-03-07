@@ -23,6 +23,8 @@ const FilteredItem = ({ category }) => {
   useEffect(() => {
     fetchItems();
   }, [url]);
+  
+  const count = 1
 
   const itemCard =
     items &&
