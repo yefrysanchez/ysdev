@@ -86,7 +86,14 @@ const CheckoutForm = () => {
       <div>
         <h3 className="font-bold my-4">Total: ${totalPrice.toFixed(2)}</h3>
       </div>
-      {cardNotice && <p>{cardNotice}</p>}
+      {cardNotice ? (
+        <p className="text-red-500">{cardNotice}</p>
+      ) : (
+        <div>
+          <p>Please do not use a real card</p>
+          <p>Test Card#: 4242 4242 4242 4242</p>
+        </div>
+      )}
       <CardElement className="bg-black/10 p-4 rounded-lg " />
       <button
         disabled={!stripe}

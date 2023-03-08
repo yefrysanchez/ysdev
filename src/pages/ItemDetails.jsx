@@ -48,7 +48,7 @@ const ItemDetails = () => {
 
           <div className="mt-10 mb-6">
             <h3 className="font-bold text-2xl">{items.name}</h3>
-            <p>$199.99</p>
+            <p>${items.price}</p>
             <p className="mt-5">{items.desc}</p>
           </div>
 
