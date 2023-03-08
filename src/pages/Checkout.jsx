@@ -1,25 +1,22 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import {
+  CardElement,
+  Elements,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
+import { Formik } from "formik";
+import React, { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckoutForm from "./CheckoutForm";
+
+const stripePromise = loadStripe(import.meta.env.VITE_REACT_APP_STRIPE_PUBLIC);
 
 export const Checkout = () => {
-
-const [activeStep, setActiveStep] = useState(0)
-const cart = useSelector((state ) => state.cart.cart)
-const isFirstStep = activeStep === 0
-const isSecondStep = activeStep === 1
-
-const handleFormSubmit =() => {
-  setActiveStep(activeStep + 1)
-}
-
-async function makePayment (value) {
-
-}
-
-
   return (
-    <div className='pt-[80px] w-4/5 mx-auto'>
-      Checkout
+    <div className="pt-[80px] w-5/4 mx-auto min-h-screen mb-8">
+      <Elements stripe={stripePromise}>
+        <CheckoutForm />
+      </Elements>
     </div>
-  )
-}
+  );
+};

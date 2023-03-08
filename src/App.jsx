@@ -11,7 +11,10 @@ import ItemDetails from "./pages/ItemDetails";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
+const stripePromise = loadStripe(import.meta.env.VITE_REACT_APP_STRIPE_PUBLIC);
 
 function App() {
   const ScrollToTop = () => {
@@ -22,7 +25,6 @@ function App() {
 
     return null;
   };
-
 
   return (
     <div className="font-Montserrat">
