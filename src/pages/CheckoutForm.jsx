@@ -1,11 +1,23 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { emptyCart } from "../state/cartSlice";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const element = useElements();
   const [loading, setLoading] = useState(false);
+  const [cardNotice, setCardNotice] = useState();
+  const cart = useSelector((state) => state.cart.cart);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const totalPrice = cart.reduce((total, item) => {
+    return total + item.count * item.price;
+  }, 0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,11 +37,16 @@ const CheckoutForm = () => {
           "http://localhost:3000/api/checkout",
           {
             id,
-            amount: 10000,
+            amount: totalPrice.toFixed(2) * 100,
           }
         );
         console.log(data);
+        setCardNotice(data.message);
         element.getElement(CardElement).clear();
+        if (data.message === "Successful payment") {
+          dispatch(emptyCart());
+          navigate("/checkout/success");
+        }
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -40,22 +57,36 @@ const CheckoutForm = () => {
 
   return (
     <form
-      className="max-w-[400px] shadow-md border m-auto rounded-lg p-4"
+      className="max-w-[600px] max-h-2/3  shadow-md border m-auto rounded-lg p-4"
       onSubmit={handleSubmit}
     >
-      <div className="h-[300px] overflow-hidden border-">
-        <p>Item name</p>
-        <p>Quantity: 1</p>
-        <p>$99.99</p>
-        <img
-          className="h-full w-full object-contain"
-          src="https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/a0a300da-2e16-4483-ba64-9815cf0598ac/air-force-1-07-mens-shoes-5QFp5Z.png"
-          alt="alt"
-        />
+      <div className="h-1/2  overflow-auto">
+        {cart &&
+          cart.map((item) => (
+            <div
+              key={item._id}
+              className="h-[150px] mt-4 overflow-hidden border p-4 rounded-lg flex items-center gap-1"
+            >
+              <div className="w-1/2 h-full">
+                <img
+                  className="h-full w-full object-contain"
+                  src={item.image}
+                  alt={item.name}
+                />
+              </div>
+              <div className="w-1/2">
+                <p>{item.name}</p>
+                <p>Quantity: {item.count}</p>
+                <p>${item.price}</p>
+              </div>
+            </div>
+          ))}
       </div>
+
       <div>
-        <h3 className="font-bold my-4">Total: $100</h3>
+        <h3 className="font-bold my-4">Total: ${totalPrice.toFixed(2)}</h3>
       </div>
+      {cardNotice && <p>{cardNotice}</p>}
       <CardElement className="bg-black/10 p-4 rounded-lg " />
       <button
         disabled={!stripe}
