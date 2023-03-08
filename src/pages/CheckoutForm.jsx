@@ -34,7 +34,7 @@ const CheckoutForm = () => {
 
       try {
         const { data } = await axios.post(
-          "http://localhost:3000/api/checkout",
+          "https://ysdev-server.onrender.com",
           {
             id,
             amount: totalPrice.toFixed(2) * 100,
