@@ -34,16 +34,16 @@ const CheckoutForm = () => {
 
       try {
         const { data } = await axios.post(
-          "https://ysdev-server.onrender.com",
+          "https://ysdev-server.onrender.com/api/checkout",
           {
             id,
-            amount: totalPrice.toFixed(2) * 100,
+            amount: (totalPrice * 100).toFixed(0),
           }
         );
         setCardNotice(data.message);
         element.getElement(CardElement).clear();
         if (data.message === "Successful payment") {
-          setLoading(false)
+          setLoading(false);
           dispatch(emptyCart());
           navigate("/checkout/success");
         }
@@ -84,7 +84,9 @@ const CheckoutForm = () => {
       </div>
 
       <div>
-        <h3 className="font-bold my-4">Total: ${totalPrice.toFixed(2)}</h3>
+        <h3 className="font-bold my-4">
+          Total: ${totalPrice.toFixed(2)}
+        </h3>
       </div>
       {cardNotice ? (
         <p className="text-red-500">{cardNotice}</p>
