@@ -22,7 +22,7 @@ const Confirmation = () => {
             Thank you for completing your secure online payment.
           </p>
           <p> Have a great day! </p>
-          <div className="py-10 text-center">
+          <div className="py-10 text-center flex flex-col items-center gap-4">
             <Link
               to="/"
               className="px-12 rounded-lg mx-1 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
