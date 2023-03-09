@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToCart, setItems } from "../state/cartSlice";
@@ -8,6 +8,7 @@ const Item = () => {
   const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const url = `https://${
     import.meta.env.VITE_REACT_APP_API_ID
@@ -16,9 +17,11 @@ const Item = () => {
   }?query=${import.meta.env.VITE_REACT_APP_QUERY}`;
 
   const fetchItems = async () => {
+    setIsLoading(true);
     const res = await fetch(url);
     const data = await res.json();
     dispatch(setItems(data.result));
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -53,7 +56,22 @@ const Item = () => {
       </div>
     ));
 
-  return <>{itemCard}</>;
+  return (
+    <>
+      {isLoading ? (
+        <div
+          className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        >
+          <span className="!absolute text-white !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Loading...
+          </span>
+        </div>
+      ) : (
+        itemCard
+      )}
+    </>
+  );
 };
 
 export default Item;

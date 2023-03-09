@@ -40,10 +40,10 @@ const CheckoutForm = () => {
             amount: totalPrice.toFixed(2) * 100,
           }
         );
-        console.log(data);
         setCardNotice(data.message);
         element.getElement(CardElement).clear();
         if (data.message === "Successful payment") {
+          setLoading(false)
           dispatch(emptyCart());
           navigate("/checkout/success");
         }

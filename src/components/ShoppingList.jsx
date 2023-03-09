@@ -3,6 +3,8 @@ import FilteredItem from "./FilteredItem";
 import Item from "./Item";
 
 const ShoppingList = () => {
+
+  
   return (
     <div className="lg:w-4/5 mt-[80px] mx-auto ">
       <div className="mb-4">

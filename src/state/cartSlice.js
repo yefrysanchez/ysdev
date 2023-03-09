@@ -30,8 +30,9 @@ export const cartSlice = createSlice({
       state.isCartOpen = !state.isCartOpen;
     },
     addToCart: (state, action) => {
+      if (state.cart.find((item) => item.name === action.payload.item.name))
+        return;
       state.cart = [...state.cart, action.payload.item];
-      
     },
     removeFromCart: (state, action) => {
       state.cart = state.cart.filter((item) => item._id !== action.payload._id);
